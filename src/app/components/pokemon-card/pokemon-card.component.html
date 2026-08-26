@@ -1,0 +1,10 @@
+<article class="pokemon-card">
+  <img
+    class="pokemon-card__image"
+    [src]="pokemon().imageUrl"
+    [alt]="'Image de ' + pokemon().name"
+  />
+
+  <p class="pokemon-card__number">N° {{ formatId(pokemon().id) }}</p>
+  <h2 class="pokemon-card__name">{{ pokemon().name }}</h2>
+</article>

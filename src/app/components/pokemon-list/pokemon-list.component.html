@@ -1,0 +1,22 @@
+<section class="pokemon-list" aria-labelledby="pokemon-list-title">
+  <div class="pokemon-list__heading">
+    <p>Vue liste — page d'accueil</p>
+    <h2 id="pokemon-list-title">Liste des Pokémon</h2>
+  </div>
+
+  @if (loading()) {
+    <p class="pokemon-list__message">Chargement des Pokémon...</p>
+  } @else if (errorMessage()) {
+    <p class="pokemon-list__message pokemon-list__message--error">
+      {{ errorMessage() }}
+    </p>
+  } @else {
+    <div class="pokemon-grid">
+      @for (pokemon of pokemons(); track pokemon.id) {
+        <app-pokemon-card [pokemon]="pokemon" />
+      } @empty {
+        <p class="pokemon-list__message">Aucun Pokémon trouvé.</p>
+      }
+    </div>
+  }
+</section>

@@ -1,0 +1,34 @@
+.pokemon-list__heading {
+  margin-bottom: 1.5rem;
+}
+
+.pokemon-list__heading p {
+  margin: 0 0 0.25rem;
+  color: #d90445;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pokemon-list__heading h2 {
+  margin: 0;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+}
+
+.pokemon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 1rem;
+}
+
+.pokemon-list__message {
+  padding: 2rem;
+  text-align: center;
+  background-color: white;
+  border-radius: 0.75rem;
+}
+
+.pokemon-list__message--error {
+  color: #b00020;
+}
