@@ -1,59 +1,157 @@
-# PokedexAngularMyb
+# Pokedex Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.6.
+## Auteur
 
-## Development server
+**Badirou Mohamed Yecir**
 
-To start a local development server, run:
+## Description du projet
+
+Cette application Angular affiche une liste de Pokémon récupérée depuis l'API publique [PokeAPI](https://pokeapi.co/).
+
+L'utilisateur peut consulter les 20 premiers Pokémon, rechercher un Pokémon par son nom et ouvrir une page de détail contenant son image, ses types et ses statistiques de base.
+
+## Fonctionnalités
+
+- Récupération des 20 premiers Pokémon depuis PokeAPI
+- Affichage des Pokémon sous forme de cartes réutilisables
+- Affichage du numéro, du nom et de l'image de chaque Pokémon
+- Recherche en direct par nom avec RxJS
+- Message de chargement pendant les appels HTTP
+- Gestion des erreurs de l'API
+- Navigation vers une page de détail avec Angular Router
+- Affichage des types et des statistiques de base
+- Représentation des statistiques avec des barres CSS
+- Interface responsive adaptée aux ordinateurs et aux téléphones
+
+## Technologies utilisées
+
+- Angular 22
+- TypeScript
+- HTML
+- CSS
+- RxJS
+- Angular Router
+- Angular HttpClient
+- PokeAPI
+
+## Prérequis
+
+Avant de lancer le projet, il faut installer :
+
+- Node.js compatible avec Angular 22
+- npm
+- Angular CLI 22
+
+## Installation
+
+Ouvrir un terminal à la racine du projet, puis installer les dépendances :
+
+```bash
+npm install
+```
+
+## Lancement de l'application
+
+Lancer le serveur de développement :
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Il est également possible d'utiliser la commande suivante :
 
 ```bash
-ng generate component component-name
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Ouvrir ensuite l'adresse suivante dans un navigateur :
+
+```text
+http://localhost:4200/
+```
+
+L'application se recharge automatiquement après chaque modification du code source.
+
+## Compilation
+
+Pour compiler le projet en mode production :
 
 ```bash
-ng generate --help
+npm run build
 ```
 
-## Building
+Les fichiers compilés sont générés dans le dossier `dist/`.
 
-To build the project run:
+## Tests
+
+Pour exécuter les tests unitaires :
 
 ```bash
-ng build
+npm test
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Organisation du projet
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
+```text
+src/
+└── app/
+    ├── components/
+    │   ├── pokemon-card/
+    │   ├── pokemon-detail/
+    │   └── pokemon-list/
+    ├── models/
+    │   └── pokemon.model.ts
+    ├── services/
+    │   └── pokemon-api.service.ts
+    ├── app.component.ts
+    └── app.routes.ts
 ```
 
-## Running end-to-end tests
+- `components/` contient les composants responsables de l'affichage.
+- `models/` contient les interfaces TypeScript utilisées pour typer les données.
+- `services/` contient la logique des appels HTTP vers PokeAPI.
+- `app.routes.ts` contient la configuration des routes de l'application.
 
-For end-to-end (e2e) testing, run:
+## API utilisée
 
-```bash
-ng e2e
+Liste des Pokémon :
+
+```text
+https://pokeapi.co/api/v2/pokemon?limit=20
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Détail d'un Pokémon :
 
-## Additional Resources
+```text
+https://pokeapi.co/api/v2/pokemon/{id}
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Documentation de PokeAPI :
+
+```text
+https://pokeapi.co/docs/v2
+```
+
+## Choix techniques
+
+Le projet utilise des composants standalone, conformément à la syntaxe Angular récente présentée dans le support de cours.
+
+Les appels HTTP sont regroupés dans `PokemonApiService`. Les composants n'utilisent donc pas directement `HttpClient`.
+
+Les données de PokeAPI sont décrites avec des interfaces TypeScript. Aucun type `any` n'est utilisé.
+
+Les états asynchrones, comme le chargement, les erreurs et les listes de Pokémon, sont stockés dans des signals. Ils sont mis à jour avec la méthode `.set()` afin de fonctionner correctement en mode zoneless.
+
+La recherche utilise un `Subject`, `debounceTime(300)` et `distinctUntilChanged()`. Le filtrage est effectué localement sur les 20 Pokémon déjà chargés afin d'éviter de nouveaux appels HTTP pendant la saisie.
+
+Chaque carte reçoit ses données depuis son composant parent avec `input.required<Pokemon>()`.
+
+La page de détail utilise Angular Router et `ActivatedRoute` pour récupérer l'identifiant présent dans l'URL.
+
+## Difficultés rencontrées
+
+La réponse de l'API utilisée pour la liste ne contient pas directement les images. L'identifiant de chaque Pokémon est donc extrait de son URL, puis utilisé pour construire l'adresse de son sprite. Cette solution permet d'afficher toutes les images sans effectuer 20 appels supplémentaires.
+
+Le projet fonctionne en mode zoneless. Les valeurs modifiées après les appels HTTP ont donc été déclarées avec `signal()` pour garantir la mise à jour de l'interface.
+
+La recherche devait rester fluide sans envoyer une requête à chaque caractère. Un flux RxJS avec un délai de 300 millisecondes a été utilisé avant le filtrage de la liste locale.
