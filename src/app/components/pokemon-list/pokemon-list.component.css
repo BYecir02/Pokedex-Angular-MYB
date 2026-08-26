@@ -16,6 +16,31 @@
   font-size: clamp(1.75rem, 5vw, 2.5rem);
 }
 
+.pokemon-search {
+  margin-bottom: 1.5rem;
+}
+
+.pokemon-search label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.pokemon-search input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  color: #17172a;
+  background-color: white;
+  border: 1px solid #dedee8;
+  border-radius: 0.75rem;
+  font: inherit;
+}
+
+.pokemon-search input:focus {
+  border-color: #d90445;
+  outline: 3px solid rgb(217 4 69 / 15%);
+}
+
 .pokemon-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));

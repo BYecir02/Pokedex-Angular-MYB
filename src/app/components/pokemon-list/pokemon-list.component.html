@@ -11,8 +11,19 @@
       {{ errorMessage() }}
     </p>
   } @else {
+    <div class="pokemon-search">
+      <label for="pokemon-search">Rechercher un Pokémon</label>
+      <input
+        id="pokemon-search"
+        type="search"
+        placeholder="Rechercher un Pokémon..."
+        autocomplete="off"
+        (input)="onSearch($event)"
+      />
+    </div>
+
     <div class="pokemon-grid">
-      @for (pokemon of pokemons(); track pokemon.id) {
+      @for (pokemon of filteredPokemons(); track pokemon.id) {
         <app-pokemon-card [pokemon]="pokemon" />
       } @empty {
         <p class="pokemon-list__message">Aucun Pokémon trouvé.</p>
