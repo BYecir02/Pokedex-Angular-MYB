@@ -1,8 +1,9 @@
 import { Component, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Pokemon } from '../../models/pokemon.model';
 
 @Component({
-  imports: [],
+  imports: [RouterLink],
   selector: 'app-pokemon-card',
   styleUrl: './pokemon-card.component.css',
   templateUrl: './pokemon-card.component.html',

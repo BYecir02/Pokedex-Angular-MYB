@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import {
   Pokemon,
+  PokemonDetail,
   PokemonListItem,
   PokemonListResponse,
 } from '../models/pokemon.model';
@@ -10,14 +11,16 @@ import {
 @Injectable({ providedIn: 'root' })
 export class PokemonApiService {
   private http = inject(HttpClient);
-  private url = 'https://pokeapi.co/api/v2/pokemon?limit=20';
+  private url = 'https://pokeapi.co/api/v2/pokemon';
 
   getPokemons(): Observable<Pokemon[]> {
-    return this.http.get<PokemonListResponse>(this.url).pipe(
-      map((response) =>
-        response.results.map((pokemon) => this.createPokemon(pokemon)),
-      ),
-    );
+    return this.http
+      .get<PokemonListResponse>(`${this.url}?limit=20`)
+      .pipe(map((response) => response.results.map((pokemon) => this.createPokemon(pokemon))));
+  }
+
+  getPokemon(id: string): Observable<PokemonDetail> {
+    return this.http.get<PokemonDetail>(`${this.url}/${id}`);
   }
 
   private createPokemon(pokemon: PokemonListItem): Pokemon {
